@@ -1,0 +1,7 @@
+C:\Users\stepa\OneDrive\Рабочий стол\Хобби проекты\Perudo\obj\Debug\Perudo.csproj.AssemblyReference.cache
+C:\Users\stepa\OneDrive\Рабочий стол\Хобби проекты\Perudo\obj\Debug\Perudo.csproj.CoreCompileInputs.cache
+C:\Users\stepa\OneDrive\Рабочий стол\Хобби проекты\Perudo\bin\Debug\Perudo.exe.config
+C:\Users\stepa\OneDrive\Рабочий стол\Хобби проекты\Perudo\bin\Debug\Perudo.exe
+C:\Users\stepa\OneDrive\Рабочий стол\Хобби проекты\Perudo\bin\Debug\Perudo.pdb
+C:\Users\stepa\OneDrive\Рабочий стол\Хобби проекты\Perudo\obj\Debug\Perudo.exe
+C:\Users\stepa\OneDrive\Рабочий стол\Хобби проекты\Perudo\obj\Debug\Perudo.pdb
