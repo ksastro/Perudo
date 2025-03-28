@@ -12,7 +12,36 @@ using System.Threading.Tasks;
 
 namespace Perudo
 {
-	public class Table
+    public class Settings
+    {
+        private Settings() { }
+
+        public static int PLAYER_NUMBER = 2;
+        public static int DICE_NUMBER = 2;
+        public static int DICE_SIZE = 6;
+        public static readonly int BETS_NUMBER = DICE_NUMBER * DICE_SIZE;
+        public static float STEPSIZE = 0.1f; //a number in a range (0,1), dictates the accuracy vs speed
+        public static int DEFAULT_ITERATIONS = 1000;
+        private static List<int> _PLAYER_HAND_SIZES = new List<int> { 1, 1 };
+
+
+        public static int PLAYER_HAND_SIZES(int i)
+        {
+            return _PLAYER_HAND_SIZES[i];
+        }
+        public const string GREETINGS = "Здравствуйте! Вас приветствует солвер перудо! Для лучшей работы приложения рекомендуем развернуть консоль на весь экран.\n" +
+            "На данный момент солвер умеет решать только игру 1 на 1, когда у каждого игрока по одному кубику.\n" +
+            "Для начала работы введите количество итераций решения. " +
+            "Чтобы оставить количество итераций по умолчанию (1000), введите 0.";
+        public const string DESCRIPTION = "Решение уже рассчитывается.\n" +
+            "Решение выводится в формате таблицы. Первый столбец таблицы - варианты руки, то есть кубика игрока.\n" +
+            "Второй столбец - вероятность для игрока иметь данную руку в данный момент игры. Через точку с запятой приводятся эти вероятности для всех игроков.\n" +
+            "Остальные столбцы отвечают за доступные действия для текущего игрока. В заголовке столбца обозначено действие: check или Bet(amount,value).\n" +
+            "В ячейках таблицы указана стратегия для данного действия при условии, что у вас данная рука.\n" +
+            "Стратегия указана в формате (P;EV), где P - вероятность сделать действие, EV - математическое ожидание выигрыша от этого действия.";
+    }
+
+    public class Table
 	{
 		private static List<Player> Players;
 
@@ -33,34 +62,6 @@ namespace Perudo
 		{
 			return Players[i];
 		}
-	}
-	public class Settings
-	{
-		private Settings() { }
-
-		public static int PLAYER_NUMBER = 2;
-		public static int DICE_NUMBER = 2;
-		public static int DICE_SIZE = 6;
-		public static readonly int BETS_NUMBER = DICE_NUMBER * DICE_SIZE;
-		public static float STEPSIZE = 0.1f; //a number in a range (0,1), dictates the accuracy vs speed
-		public static int DEFAULT_ITERATIONS = 1000;
-		private static List<int> _PLAYER_HAND_SIZES = new List<int> { 1, 1};
-
-
-		public static int PLAYER_HAND_SIZES(int i)
-		{
-			return _PLAYER_HAND_SIZES[i];
-		}
-		public const string GREETINGS = "Здравствуйте! Вас приветствует солвер перудо! Для лучшей работы приложения рекомендуем развернуть консоль на весь экран.\n" +
-			"На данный момент солвер умеет решать только игру 1 на 1, когда у каждого игрока по одному кубику.\n" +
-			"Для начала работы введите количество итераций решения. " +
-			"Чтобы оставить количество итераций по умолчанию (1000), введите 0.";
-		public const string DESCRIPTION = "Решение уже рассчитывается.\n" +
-			"Решение выводится в формате таблицы. Первый столбец таблицы - варианты руки, то есть кубика игрока.\n" +
-			"Второй столбец - вероятность для игрока иметь данную руку в данный момент игры. Через точку с запятой приводятся эти вероятности для всех игроков.\n" +
-			"Остальные столбцы отвечают за доступные действия для текущего игрока. В заголовке столбца обозначено действие: check или Bet(amount,value).\n" +
-			"В ячейках таблицы указана стратегия для данного действия при условии, что у вас данная рука.\n" +
-			"Стратегия указана в формате (P;EV), где P - вероятность сделать действие, EV - математическое ожидание выигрыша от этого действия.";
 	}
 	public class Visualizer
 	{
@@ -83,8 +84,8 @@ namespace Perudo
 				{
 					if (child.PreviousBet.Index == bet.Index && !(child is Leaf)) nextNode = child;
 				}
-			}
-			if (nextNode == treeNode) Console.WriteLine("Выбранная ставка невозможна, попробуйте ещё раз");
+                if (nextNode == treeNode) Console.WriteLine("Выбранная ставка невозможна, попробуйте ещё раз");
+            }
 			Play(nextNode);
 		}
 		public void Display(TreeNode treeNode)
@@ -159,6 +160,7 @@ namespace Perudo
 			return nextNode;
 		}
 	}
+
 	internal class Program
 	{
 		static void Main(string[] args)
@@ -205,9 +207,7 @@ namespace Perudo
 		public virtual Player DeterminePlayer() {
 			return Parent.ActivePlayer.GetNextPlayer();
 		}
-	 
-		public void SetChildren(TreeNode[] children) { Children = children; }
-		public void SetStrategy(Strategy strategy) { Strategy = strategy; }
+
 		public void GrowOneStep()   //creates Children array and Strategy object
 		{
 			GrowOneStep(out TreeNode[] children, out Strategy strategy);
