@@ -1,0 +1,16 @@
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.sln
+*.csproj
+obj/
+Debug/
+Release/
+x64/
+bin/
+Properties/
+
+*.config
+
+PERUDO OLD/
